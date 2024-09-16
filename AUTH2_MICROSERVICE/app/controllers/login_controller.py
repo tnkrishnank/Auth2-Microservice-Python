@@ -25,6 +25,7 @@ class Login(Resource):
         try:
             validate_username(data['username'])
             check_username_exists(data['username'])
+            check_user_enabled(data['username'])
             verify_user(data['username'], data['password'])
             new_auth = Authentications(
                 user_id=get_user(data['username']).id,

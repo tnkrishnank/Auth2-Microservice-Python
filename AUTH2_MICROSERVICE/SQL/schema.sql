@@ -29,8 +29,8 @@ CREATE TABLE `permissions_roles` (
   `permission_id` BIGINT(20) NOT NULL,
   `role_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (permission_id, role_id),
-  FOREIGN KEY (permission_id) REFERENCES permissions(id),
-  FOREIGN KEY (role_id) REFERENCES roles(id)
+  FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `users` (
@@ -53,16 +53,16 @@ CREATE TABLE `users_roles` (
   `user_id` BIGINT(20) NOT NULL,
   `role_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (user_id, role_id),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (role_id) REFERENCES roles(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `users_permissions` (
   `user_id` BIGINT(20) NOT NULL,
   `permission_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (user_id, permission_id),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (permission_id) REFERENCES permissions(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `contacts` (
@@ -74,7 +74,7 @@ CREATE TABLE `contacts` (
   `linkedin` VARCHAR(255) DEFAULT NULL,
   `website` VARCHAR(255) DEFAULT NULL,
   `note` VARCHAR(255) DEFAULT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `addresses` (
@@ -84,7 +84,7 @@ CREATE TABLE `addresses` (
   `city` VARCHAR(20) DEFAULT NULL,
   `country` VARCHAR(20) DEFAULT NULL,
   `zip_code` VARCHAR(20) DEFAULT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `authentications` (
@@ -93,5 +93,5 @@ CREATE TABLE `authentications` (
   `creation_dt` TIMESTAMP NOT NULL DEFAULT current_TIMESTAMP,
   `duration` BIGINT(20) NOT NULL DEFAULT 3600,
   PRIMARY KEY (user_id, auth_token),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

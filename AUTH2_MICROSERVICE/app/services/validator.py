@@ -78,3 +78,27 @@ def strip_phone(phone):
     if phone[0] == '+':
         return phone[3:]
     return phone
+
+def check_secured_user(username):
+    user = get_user(username)
+    if not user.secured:
+        raise Exception("Not a secured user.")
+    return True
+
+def check_not_secured_user(username):
+    user = get_user(username)
+    if user.secured:
+        raise Exception("It is a secured user.")
+    return True
+
+def check_user_enabled(username):
+    user = get_user(username)
+    if not user.enabled:
+        raise Exception("User not enabled.")
+    return True
+
+def check_user_not_enabled(username):
+    user = get_user(username)
+    if user.enabled:
+        raise Exception("User enabled.")
+    return True
