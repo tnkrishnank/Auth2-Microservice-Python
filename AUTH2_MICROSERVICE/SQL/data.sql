@@ -10,21 +10,31 @@ DELETE FROM addresses;
 DELETE FROM authentications;
 DELETE FROM users;
 
-INSERT INTO permissions(id, permission, note) VALUES (1, 'MANAGE_USER_DATA', 'Manage User Data');
-INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (2, 'MANAGER_DRIVE_EDIT', 'MANAGER', 'EDIT', 'Manager Directory Edit');
-INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (3, 'MANAGER_DRIVE_VIEW', 'MANAGER', 'VIEW', 'Manager Directory Edit');
-INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (4, 'PROJECT_FILES_EDIT', 'PROJECT', 'EDIT', 'Project Files Directory Edit');
-INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (5, 'PROJECT_FILES_VIEW', 'PROJECT', 'VIEW', 'Project Files Directory View');
+INSERT INTO permissions(id, permission, note) VALUES (1, 'CREATE_USER', 'Create a new user');
+INSERT INTO permissions(id, permission, note) VALUES (2, 'READ_USER', 'Read a user data');
+INSERT INTO permissions(id, permission, note) VALUES (3, 'UPDATE_USER', 'Update a user data');
+INSERT INTO permissions(id, permission, note) VALUES (4, 'DELETE_USER', 'Delete a user');
+INSERT INTO permissions(id, permission, note) VALUES (5, 'ADD_PERMISSION_USER', 'Add permission on a user');
+INSERT INTO permissions(id, permission, note) VALUES (6, 'DELETE_PERMISSION_USER', 'Delete permission on a user');
+INSERT INTO permissions(id, permission, note) VALUES (7, 'ADD_ROLE_USER', 'Add role on a user');
+INSERT INTO permissions(id, permission, note) VALUES (8, 'DELETE_ROLE_USER', 'Delete role on a user');
+-- INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (2, 'MANAGER_DRIVE_EDIT', 'MANAGER', 'EDIT', 'Manager Directory Edit');
+-- INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (3, 'MANAGER_DRIVE_VIEW', 'MANAGER', 'VIEW', 'Manager Directory Edit');
+-- INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (4, 'PROJECT_FILES_EDIT', 'PROJECT', 'EDIT', 'Project Files Directory Edit');
+-- INSERT INTO permissions(id, permission, resource_path, access_type, note) VALUES (5, 'PROJECT_FILES_VIEW', 'PROJECT', 'VIEW', 'Project Files Directory View');
 
 INSERT INTO roles(id, role) VALUES (1, 'ADMINISTRATOR');
 INSERT INTO roles(id, role) VALUES (2, 'MANAGER');
 INSERT INTO roles(id, role) VALUES (3, 'TEAM_LEAD');
 
 INSERT INTO permissions_roles(permission_id, role_id) VALUES (1, 1);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (2, 1);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (3, 1);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (4, 1);
 INSERT INTO permissions_roles(permission_id, role_id) VALUES (2, 2);
-INSERT INTO permissions_roles(permission_id, role_id) VALUES (4, 2);
-INSERT INTO permissions_roles(permission_id, role_id) VALUES (3, 3);
-INSERT INTO permissions_roles(permission_id, role_id) VALUES (4, 3);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (5, 2);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (6, 2);
+INSERT INTO permissions_roles(permission_id, role_id) VALUES (2, 3);
 
 INSERT INTO users(id, username, password, name, surname, gender, birth_date) VALUES (1, 'test1', '99f2bdf9942653ab32d9dfa0b43c72c3fbbb9679450fd965c590c224897b848a', 'Alex', 'Ivan', 'M', '1978-01-08');
 INSERT INTO users(id, username, password, name, surname, gender, birth_date) VALUES (2, 'test2', '99f2bdf9942653ab32d9dfa0b43c72c3fbbb9679450fd965c590c224897b848a', 'Brad', 'Jack', 'F', '1980-02-11');
@@ -57,12 +67,11 @@ UPDATE users SET secured = true WHERE id = 1;
 UPDATE users SET enabled = false WHERE id = 8;
 
 INSERT INTO users_roles(user_id, role_id) VALUES (1, 1);
-INSERT INTO users_roles(user_id, role_id) VALUES (1, 2);
 INSERT INTO users_roles(user_id, role_id) VALUES (2, 2);
 INSERT INTO users_roles(user_id, role_id) VALUES (3, 2);
 INSERT INTO users_roles(user_id, role_id) VALUES (4, 3);
 INSERT INTO users_roles(user_id, role_id) VALUES (5, 3);
 INSERT INTO users_roles(user_id, role_id) VALUES (6, 3);
 
-INSERT INTO users_permissions(user_id, permission_id) VALUES (7, 5);
-INSERT INTO users_permissions(user_id, permission_id) VALUES (8, 5);
+INSERT INTO users_permissions(user_id, permission_id) VALUES (7, 2);
+INSERT INTO users_permissions(user_id, permission_id) VALUES (8, 2);

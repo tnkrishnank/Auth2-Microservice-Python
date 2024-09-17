@@ -1,6 +1,6 @@
 from app import api
 from app.models import *
-from app.utils import sqlalchemy_to_restx_model_exclude, sqlalchemy_to_restx_model_include
+from .sqlalchemy_to_restx_model import sqlalchemy_to_restx_model_exclude, sqlalchemy_to_restx_model_include
 
 from flask_restx import fields
 

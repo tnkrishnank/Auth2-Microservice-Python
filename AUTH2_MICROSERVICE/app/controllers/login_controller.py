@@ -1,10 +1,9 @@
-from app import api, db
+from app import api
 from app.services import *
 from app.utils import fill_authentication_schema
 
 from flask import request
 from flask_restx import Namespace, Resource
-from datetime import datetime
 
 login_request_schema = api.models['LoginRequestSchema']
 authentication_schema = api.models['AuthenticationSchema']
@@ -21,21 +20,15 @@ class Login(Resource):
     def post(self):
         data = request.json
         if login_request_schema is None:
-            return "Empty Request Data.", 403
+            return {"msg": "Empty Request Data."}, 403
         try:
             validate_username(data['username'])
             check_username_exists(data['username'])
             check_user_enabled(data['username'])
             verify_user(data['username'], data['password'])
-            new_auth = Authentications(
-                user_id=get_user(data['username']).id,
-                auth_token=generate_auth_token(),
-                creation_dt=datetime.utcnow(),
-                duration=data['duration'] if data['duration'] else 3600
-            )
-            db.session.add(new_auth)
-            db.session.commit()
+            new_auth = create_authentication(data['username'], data['duration'])
+            update_user_login_dt(data['username'])
             auth_data = fill_authentication_schema(data['username'], new_auth.auth_token)
             return auth_data, 201
         except Exception as e:
-            return str(e), 403
+            return {"msg": str(e)}, 403

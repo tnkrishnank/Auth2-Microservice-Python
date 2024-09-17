@@ -1,7 +1,8 @@
 from app import api, db
+from .time import get_current_datetime
 
 from flask_restx import fields
-from datetime import datetime, date
+from datetime import date
 
 def sqlalchemy_to_restx_model_exclude(model, name, exclude_columns=None, additional_fields=None):
     model_fields = {}
@@ -23,7 +24,7 @@ def sqlalchemy_to_restx_model_exclude(model, name, exclude_columns=None, additio
         elif isinstance(column.type, db.Date):
             model_fields[column.name] = fields.Date(required=required, default=date.today)
         elif isinstance(column.type, db.DateTime):
-            model_fields[column.name] = fields.DateTime(required=required, default=datetime.now)
+            model_fields[column.name] = fields.DateTime(required=required, default=get_current_datetime())
         elif isinstance(column.type, db.BigInteger):
             model_fields[column.name] = fields.Integer(required=required, default=default)
         elif isinstance(column.type, db.SmallInteger):
@@ -53,7 +54,7 @@ def sqlalchemy_to_restx_model_include(model, name, include_columns=None, additio
         elif isinstance(column.type, db.Date):
             model_fields[column.name] = fields.Date(required=required, default=date.today)
         elif isinstance(column.type, db.DateTime):
-            model_fields[column.name] = fields.DateTime(required=required, default=datetime.now)
+            model_fields[column.name] = fields.DateTime(required=required, default=get_current_datetime())
         elif isinstance(column.type, db.BigInteger):
             model_fields[column.name] = fields.Integer(required=required, default=default)
         elif isinstance(column.type, db.SmallInteger):

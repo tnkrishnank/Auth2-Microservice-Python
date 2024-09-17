@@ -1,5 +1,5 @@
 from app import api
-from app.services import *
+from app.services.db_get_queries import *
 
 from flask_restx import marshal
 
@@ -19,7 +19,7 @@ def fill_user_schema(username):
 
 def fill_authentication_schema(username, auth_token):
     authentication_schema = api.models['AuthenticationSchema']
-    auth = get_auth(username, auth_token)
+    auth = get_auth(auth_token)
     auth_data = marshal(auth, authentication_schema)
     auth_data['username'] = username
     return auth_data
