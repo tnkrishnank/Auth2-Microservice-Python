@@ -2,6 +2,8 @@ from app import db
 from app.models import *
 from app.utils.time import get_current_datetime
 from .db_get_queries import *
+from .permission_data_validator import *
+from .role_data_validator import *
 
 import secrets
 import hashlib
@@ -32,12 +34,14 @@ def validate_access(permission, auth_token):
         permissions = []
     if roles is not None:
         for role in roles:
-            perms = get_permissions_by_role(role)
-            for perm in perms:
-                if perm not in permissions:
-                    permissions.append(perm)
+            enabled = check_role_enabled(role)
+            if enabled:
+                perms = get_permissions_by_role(role)
+                for perm in perms:
+                    if perm not in permissions:
+                        permissions.append(perm)
     for perm in permissions:
-        if perm == permission:
+        if perm == permission and check_permission_enabled(permission):
             return True
     raise Exception("Unauthorized")
 

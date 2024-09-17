@@ -120,6 +120,24 @@ class RUDUser(Resource):
         except Exception as e:
             return {"msg": str(e)}, 403
 
+@api.route("/<string:auth_token>/getallusers")
+class GetAllUsers(Resource):
+    @api.doc(description='Get All User Accounts')
+    @api.response(200, 'Success', user_schema)
+    @api.response(401, 'Unauthorized')
+    @api.response(403, 'Forbidden')
+    @check_permissions(['READ_USER'])
+    def get(self):
+        try:
+            users = []
+            usernames = get_all_usernames()
+            for username in usernames:
+                user_data = fill_user_schema(username)
+                users.append(user_data)
+            return users, 200
+        except Exception as e:
+            return {"msg": str(e)}, 403
+
 @api.route("/<string:auth_token>/<string:username>/roles/<string:role>")
 class UserRole(Resource):
     @api.doc(description='Add role on a user')
