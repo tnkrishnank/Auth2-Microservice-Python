@@ -54,3 +54,35 @@ def delete_user_roles(username):
     UsersRoles.query.filter_by(user_id=user.id).delete()
     db.session.commit()
     return True
+
+# PERMISSION RELATED QUERIES
+def delete_permission(permission):
+    permission = get_permission(permission)
+    if not permission:
+        raise Exception('Permission not found.')
+    db.session.delete(permission)
+    db.session.commit()
+    return True
+
+# ROLE RELATED QUERIES
+def delete_role(role):
+    role = get_role(role)
+    if not role:
+        raise Exception('Role not found.')
+    db.session.delete(role)
+    db.session.commit()
+    return True
+
+def delete_role_permission(role, permission):
+    role = get_role(role)
+    if not role:
+        raise Exception('Role not found.')
+    permission = get_permission(permission)
+    if not permission:
+        raise Exception('Permission not found.')
+    permission_role = PermissionsRoles.query.filter_by(role_id=role.id,permission_id=permission.id).first()
+    if not permission_role:
+        raise Exception('Permission Role mapping not found.')
+    db.session.delete(permission_role)
+    db.session.commit()
+    return True

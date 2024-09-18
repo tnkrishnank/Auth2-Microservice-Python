@@ -92,7 +92,7 @@ class RUDUser(Resource):
                 check_permission_exists(i)
             for i in data['roles']:
                 check_role_exists(i)
-            update_user(data['username'], data)
+            update_user(username, data)
             update_contact(data['username'], data['contact'])
             update_address(data['username'], data['address'])
             delete_user_permissions(username)
@@ -138,36 +138,6 @@ class GetAllUsers(Resource):
         except Exception as e:
             return {"msg": str(e)}, 403
 
-@api.route("/<string:auth_token>/<string:username>/roles/<string:role>")
-class UserRole(Resource):
-    @api.doc(description='Add role on a user')
-    @api.response(200, 'Success', user_schema)
-    @api.response(401, 'Unauthorized')
-    @api.response(403, 'Forbidden')
-    @check_permissions(['ADD_ROLE_USER'])
-    def post(self, username, role):
-        try:
-            check_username_exists(username)
-            check_role_exists(role)
-            create_user_role(username, role)
-            user_data = fill_user_schema(username)
-            return user_data, 200
-        except Exception as e:
-            return {"msg": str(e)}, 403
-
-    @api.doc(description='Delete role on a user')
-    @api.response(200, 'Success', user_schema)
-    @api.response(401, 'Unauthorized')
-    @api.response(403, 'Forbidden')
-    @check_permissions(['DELETE_ROLE_USER'])
-    def delete(self, username, role):
-        try:
-            delete_user_role(username, role)
-            user_data = fill_user_schema(username)
-            return user_data, 200
-        except Exception as e:
-            return {"msg": str(e)}, 403
-
 @api.route("/<string:auth_token>/<string:username>/permissions/<string:permission>")
 class UserPermission(Resource):
     @api.doc(description='Add permission on a user')
@@ -179,6 +149,7 @@ class UserPermission(Resource):
         try:
             check_username_exists(username)
             check_permission_exists(permission)
+            check_permission_not_on_user(username, permission)
             create_user_permission(username, permission)
             user_data = fill_user_schema(username)
             return user_data, 200
@@ -192,7 +163,40 @@ class UserPermission(Resource):
     @check_permissions(['DELETE_PERMISSION_USER'])
     def delete(self, username, permission):
         try:
+            check_permission_on_user(username, permission)
             delete_user_permission(username, permission)
+            user_data = fill_user_schema(username)
+            return user_data, 200
+        except Exception as e:
+            return {"msg": str(e)}, 403
+
+@api.route("/<string:auth_token>/<string:username>/roles/<string:role>")
+class UserRole(Resource):
+    @api.doc(description='Add role on a user')
+    @api.response(200, 'Success', user_schema)
+    @api.response(401, 'Unauthorized')
+    @api.response(403, 'Forbidden')
+    @check_permissions(['ADD_ROLE_USER'])
+    def post(self, username, role):
+        try:
+            check_username_exists(username)
+            check_role_exists(role)
+            check_role_not_on_user(username, role)
+            create_user_role(username, role)
+            user_data = fill_user_schema(username)
+            return user_data, 200
+        except Exception as e:
+            return {"msg": str(e)}, 403
+
+    @api.doc(description='Delete role on a user')
+    @api.response(200, 'Success', user_schema)
+    @api.response(401, 'Unauthorized')
+    @api.response(403, 'Forbidden')
+    @check_permissions(['DELETE_ROLE_USER'])
+    def delete(self, username, role):
+        try:
+            check_role_on_user(username, role)
+            delete_user_role(username, role)
             user_data = fill_user_schema(username)
             return user_data, 200
         except Exception as e:

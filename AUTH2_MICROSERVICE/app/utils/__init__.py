@@ -1,4 +1,4 @@
-from .fill_custom_schemas import fill_user_schema, fill_authentication_schema
+from .fill_custom_schemas import fill_user_schema, fill_permission_schema, fill_role_schema, fill_full_role_schema, fill_authentication_schema
 from .generate_custom_schemas import generate_custom_schemas
 from .sqlalchemy_to_restx_model import sqlalchemy_to_restx_model_exclude, sqlalchemy_to_restx_model_include
 from .time import get_current_datetime

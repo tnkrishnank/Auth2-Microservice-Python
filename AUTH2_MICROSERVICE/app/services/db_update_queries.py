@@ -42,3 +42,19 @@ def update_address(username, data):
     address.country = data['country']
     address.zip_code = data['zip_code']
     db.session.commit()
+
+def update_permission(permission, data):
+    permission = get_permission(permission)
+    permission.permission = data['permission']
+    permission.enabled = data['enabled']
+    permission.resource_path = data['resource_path']
+    permission.access_type = data['access_type']
+    permission.note = data['note']
+    db.session.commit()
+
+def update_role(role, data):
+    role = get_role(role)
+    role.role = data['role']
+    role.enabled = data['enabled']
+    role.note = data['note']
+    db.session.commit()

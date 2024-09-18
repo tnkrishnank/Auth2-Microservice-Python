@@ -102,3 +102,27 @@ def check_user_not_enabled(username):
     if user.enabled:
         raise Exception("User enabled.")
     return True
+
+def check_permission_on_user(username, permission):
+    permission_on_user = get_permission_on_user(username, permission)
+    if not permission_on_user:
+        raise Exception("Permission on user does not exist.")
+    return True
+
+def check_permission_not_on_user(username, permission):
+    permission_on_user = get_permission_on_user(username, permission)
+    if permission_on_user:
+        raise Exception("Permission on user already exists.")
+    return True
+
+def check_role_on_user(username, role):
+    role_on_user = get_role_on_user(username, role)
+    if not role_on_user:
+        raise Exception("Role on user does not exist.")
+    return True
+
+def check_role_not_on_user(username, role):
+    role_on_user = get_role_on_user(username, role)
+    if role_on_user:
+        raise Exception("Role on user already exists.")
+    return True

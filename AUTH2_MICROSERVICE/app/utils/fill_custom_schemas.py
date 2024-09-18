@@ -17,6 +17,25 @@ def fill_user_schema(username):
     user_data['permissions'] = get_user_permissions(username)
     return user_data
 
+def fill_permission_schema(permission):
+    permission_schema = api.models['PermissionSchema']
+    permission = get_permission(permission)
+    permission_data = marshal(permission, permission_schema)
+    return permission_data
+
+def fill_role_schema(role):
+    role_schema = api.models['RoleSchema']
+    role = get_role(role)
+    role_data = marshal(role, role_schema)
+    return role_data
+
+def fill_full_role_schema(role):
+    full_role_schema = api.models['FullRoleSchema']
+    role = get_role(role)
+    role_data = marshal(role, full_role_schema)
+    role_data['permissions'] = get_permissions_by_role(role.role)
+    return role_data
+
 def fill_authentication_schema(username, auth_token):
     authentication_schema = api.models['AuthenticationSchema']
     auth = get_auth(auth_token)

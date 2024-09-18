@@ -66,6 +66,18 @@ def get_user_role_count(username):
         return role_count
     return 0
 
+def get_permission_on_user(username, permission):
+    permission = get_permission(permission)
+    user = get_user(username)
+    permission_user = UsersPermissions.query.filter_by(permission_id=permission.id, user_id=user.id).first()
+    return permission_user if permission_user else None
+
+def get_role_on_user(username, role):
+    role = get_role(role)
+    user = get_user(username)
+    role_user = UsersRoles.query.filter_by(role_id=role.id, user_id=user.id).first()
+    return role_user if role_user else None
+
 # PERMISSION RELATED QUERIES
 def get_permission(permission):
     permission = Permissions.query.filter_by(permission=permission).first()
@@ -79,14 +91,15 @@ def get_permission_count(permission):
     count = db.session.query(func.count(Permissions.permission)).filter_by(permission=permission).scalar()
     return count
 
+def get_all_permissions():
+    permissions = db.session.query(Permissions.permission).all()
+    return [permission[0] for permission in permissions] if permissions else None
+
 def get_permissions_by_role(role):
     role = get_role(role)
     if role:
-        permissions = db.session.query(Permissions).join(PermissionsRoles,Permissions.id==PermissionsRoles.permission_id).filter(PermissionsRoles.role_id==role.id).all()
-        perms = []
-        for permission in permissions:
-            perms.append(permission.permission)
-        return perms if perms else None
+        permissions = db.session.query(Permissions.permission).join(PermissionsRoles).filter(PermissionsRoles.role_id==role.id).all()
+        return [permission[0] for permission in permissions] if permissions else None
     return None
 
 # ROLE RELATED QUERIES
@@ -102,7 +115,17 @@ def get_role_count(role):
     count = db.session.query(func.count(Roles.role)).filter_by(role=role).scalar()
     return count
 
-# AUTHENTICATIONS RELATED QUERIES
+def get_all_roles():
+    roles = db.session.query(Roles.role).all()
+    return [role[0] for role in roles] if roles else None
+
+def get_permission_on_role(role, permission):
+    role = Roles.query.filter_by(role=role).first()
+    permission = Permissions.query.filter_by(permission=permission).first()
+    permission_role = PermissionsRoles.query.filter_by(role_id=role.id, permission_id=permission.id).first()
+    return permission_role if permission_role else None
+
+# AUTHENTICATION RELATED QUERIES
 def get_auth(auth_token):
     auth = Authentications.query.filter_by(auth_token=auth_token).first()
     return auth

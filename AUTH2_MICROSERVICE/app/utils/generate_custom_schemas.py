@@ -28,3 +28,11 @@ def generate_custom_schemas():
         'username': fields.String(required=not column.nullable, default=column.default.arg if column.default is not None else None)
     }
     sqlalchemy_to_restx_model_exclude(Authentications, 'AuthenticationSchema', exclude_columns=['user_id'], additional_fields=additional_fields)
+
+    sqlalchemy_to_restx_model_exclude(Permissions, 'PermissionSchema', exclude_columns=['id'])
+
+    sqlalchemy_to_restx_model_exclude(Roles, 'RoleSchema', exclude_columns=['id'])
+    additional_fields = {
+        'permissions': fields.List(fields.String)
+    }
+    sqlalchemy_to_restx_model_exclude(Roles, 'FullRoleSchema', exclude_columns=['id'], additional_fields=additional_fields)

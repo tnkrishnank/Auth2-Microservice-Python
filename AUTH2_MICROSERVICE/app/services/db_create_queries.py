@@ -3,6 +3,7 @@ from app.models import *
 from .black_box import generate_auth_token, get_password_hash
 from .db_get_queries import *
 
+# USER RELATED QUERIES
 def create_user(user):
     new_user = Users(
         username=user['username'],
@@ -65,6 +66,40 @@ def create_user_role(username, role):
     db.session.commit()
     return users_roles
 
+# PERMISSION RELATED QUERIES
+def create_permission(permission):
+    new_permission = Permissions(
+        permission=permission['permission'],
+        enabled=permission['enabled'],
+        resource_path=permission['resource_path'],
+        access_type=permission['access_type'],
+        note=permission['note']
+    )
+    db.session.add(new_permission)
+    db.session.commit()
+    return new_permission
+
+# ROLE RELATED QUERIES
+def create_role(role):
+    new_role = Roles(
+        role=role['role'],
+        enabled=role['enabled'],
+        note=role['note']
+    )
+    db.session.add(new_role)
+    db.session.commit()
+    return new_role
+
+def create_role_permission(role, permission):
+    permissions_roles = PermissionsRoles(
+        role_id=get_role_id(role),
+        permission_id=get_permission_id(permission)
+    )
+    db.session.add(permissions_roles)
+    db.session.commit()
+    return permissions_roles
+
+# AUTHENTICATION RELATED QUERIES
 def create_authentication(username, duration):
     auth = Authentications(
         user_id=get_user(username).id,
@@ -74,4 +109,3 @@ def create_authentication(username, duration):
     db.session.add(auth)
     db.session.commit()
     return auth
-
