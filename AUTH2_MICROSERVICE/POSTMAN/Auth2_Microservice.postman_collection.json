@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "2fffd640-cb12-496f-ab00-0045a0d938df",
+		"name": "Auth2_Microservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37603916"
+	},
+	"item": [
+		{
+			"name": "Login Controller",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResponse = pm.response.json();\r",
+									"pm.collectionVariables.set(\"auth_token\", jsonResponse.auth_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"test7\",\r\n  \"password\": \"Hello@123\",\r\n  \"duration\": \"3600\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/login/authenticate",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"login",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permission Controller",
+			"item": [
+				{
+					"name": "Create Permission",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"permission\": \"TEST_PERMISSION\",\r\n  \"enabled\": true,\r\n  \"resource_path\": \"\",\r\n  \"access_type\": \"\",\r\n  \"note\": \"Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/permission/{{auth_token}}/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"permission",
+								"{{auth_token}}",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Permissions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/permission/{{auth_token}}/getallpermissions",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"permission",
+								"{{auth_token}}",
+								"getallpermissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/permission/{{auth_token}}/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"permission",
+								"{{auth_token}}",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Permission",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"permission\": \"TEST_PERMISSION\",\r\n  \"enabled\": false,\r\n  \"resource_path\": \"\",\r\n  \"access_type\": \"\",\r\n  \"note\": \"Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/permission/{{auth_token}}/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"permission",
+								"{{auth_token}}",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Permission",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/permission/{{auth_token}}/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"permission",
+								"{{auth_token}}",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role Controller",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"TEST_ROLE\",\r\n  \"enabled\": true,\r\n  \"note\": \"Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/getallroles",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"getallroles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/TEST_ROLE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"TEST_ROLE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"TEST_ROLE\",\r\n  \"enabled\": false,\r\n  \"note\": \"Description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/TEST_ROLE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"TEST_ROLE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/TEST_ROLE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"TEST_ROLE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Permission To Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/TEST_ROLE/permissions/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"TEST_ROLE",
+								"permissions",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission From Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/role/{{auth_token}}/TEST_ROLE/permissions/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"role",
+								"{{auth_token}}",
+								"TEST_ROLE",
+								"permissions",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Controller",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"Hello@123\",\r\n  \"name\": \"Test User\",\r\n  \"surname\": \"Test User\",\r\n  \"gender\": \"M\",\r\n  \"birth_date\": \"2001-01-21\",\r\n  \"enabled\": true,\r\n  \"note\": \"Description\",\r\n  \"secured\": false,\r\n  \"contact\": {\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"phone\": \"+919876543221\",\r\n    \"skype\": \"\",\r\n    \"facebook\": \"\",\r\n    \"linkedin\": \"\",\r\n    \"website\": \"\",\r\n    \"note\": \"Description\"\r\n  },\r\n  \"address\": {\r\n    \"address\": \"Address 1\",\r\n    \"address2\": \"Address 2\",\r\n    \"city\": \"Florida\",\r\n    \"country\": \"USA\",\r\n    \"zip_code\": \"34787\"\r\n  },\r\n  \"roles\": [\r\n    \"TEST_ROLE\"\r\n  ],\r\n  \"permissions\": [\r\n    \"TEST_PERMISSION\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/getallusers",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"getallusers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"Hello@123\",\r\n  \"name\": \"Test User\",\r\n  \"surname\": \"Test User\",\r\n  \"gender\": \"M\",\r\n  \"birth_date\": \"2001-01-21\",\r\n  \"enabled\": false,\r\n  \"note\": \"Description\",\r\n  \"secured\": false,\r\n  \"contact\": {\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"phone\": \"+919876543221\",\r\n    \"skype\": \"\",\r\n    \"facebook\": \"\",\r\n    \"linkedin\": \"\",\r\n    \"website\": \"\",\r\n    \"note\": \"Description\"\r\n  },\r\n  \"address\": {\r\n    \"address\": \"Address 1\",\r\n    \"address2\": \"Address 2\",\r\n    \"city\": \"Florida\",\r\n    \"country\": \"USA\",\r\n    \"zip_code\": \"34787\"\r\n  },\r\n  \"roles\": [\r\n    \"TEST_ROLE\"\r\n  ],\r\n  \"permissions\": [\r\n    \"TEST_PERMISSION\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Permission To User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser/permissions/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser",
+								"permissions",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission From User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser/permissions/TEST_PERMISSION",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser",
+								"permissions",
+								"TEST_PERMISSION"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Role To User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser/roles/TEST_ROLE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser",
+								"roles",
+								"TEST_ROLE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role From User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/user/{{auth_token}}/testuser/roles/TEST_ROLE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"{{auth_token}}",
+								"testuser",
+								"roles",
+								"TEST_ROLE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_token",
+			"value": ""
+		}
+	]
+}
