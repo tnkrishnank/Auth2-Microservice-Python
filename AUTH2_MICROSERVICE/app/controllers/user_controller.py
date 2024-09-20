@@ -73,10 +73,10 @@ class RUDUser(Resource):
         if create_update_user_schema is None:
             return {"msg": "Empty Request Data."}, 403
         try:
+            check_username_exists(username)
             user = get_user(username)
             contact = get_user_contact(username)
             address = get_user_address(username)
-            check_username_exists(user.username)
             if user.username != data['username']:
                 check_username_not_exists(data['username'])
             if user.password != get_password_hash(data['password']):
@@ -163,6 +163,8 @@ class UserPermission(Resource):
     @check_permissions(['DELETE_PERMISSION_USER'])
     def delete(self, username, permission):
         try:
+            check_username_exists(username)
+            check_permission_exists(permission)
             check_permission_on_user(username, permission)
             delete_user_permission(username, permission)
             user_data = fill_user_schema(username)
@@ -195,6 +197,8 @@ class UserRole(Resource):
     @check_permissions(['DELETE_ROLE_USER'])
     def delete(self, username, role):
         try:
+            check_username_exists(username)
+            check_role_exists(role)
             check_role_on_user(username, role)
             delete_user_role(username, role)
             user_data = fill_user_schema(username)
