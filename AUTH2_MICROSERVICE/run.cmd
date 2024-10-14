@@ -8,4 +8,4 @@ docker compose up -d --build
 @REM pip install flask-restx
 @REM pip install PyMySQL
 @REM pip install cryptography
-@REM python run.py
+python run.py
